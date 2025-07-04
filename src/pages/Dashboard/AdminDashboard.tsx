@@ -6,12 +6,14 @@ import UserForm from '../../components/User/UserForm';
 import TaskForm from '../../components/Task/TaskForm';
 import { User } from '../../interfaces/user.interface';
 import { Task } from '../../interfaces/task.interface';
+import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const [developers, setDevelopers] = useState<User[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [showUserForm, setShowUserForm] = useState(false);
   const [showTaskForm, setShowTaskForm] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,6 +63,11 @@ const AdminDashboard = () => {
           <Button variant="contained" onClick={() => setShowUserForm(true)}>
             Add Developer
           </Button>
+           <Button variant="contained" onClick={() => {
+            navigate('/developer-list');
+           }}>
+            All Developer
+          </Button>
           <Button variant="contained" onClick={() => setShowTaskForm(true)}>
             Add Task
           </Button>
@@ -80,30 +87,6 @@ const AdminDashboard = () => {
             onCancel={() => setShowTaskForm(false)}
           />
         )}
-
-        <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
-          Developers
-        </Typography>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Role</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {developers.map((developer) => (
-                <TableRow key={developer.id}>
-                  <TableCell>{developer.name}</TableCell>
-                  <TableCell>{developer.email}</TableCell>
-                  <TableCell>{developer.role}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
 
         <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
           Tasks

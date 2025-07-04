@@ -7,6 +7,7 @@ import AdminDashboard from './pages/Dashboard/AdminDashboard';
 import DeveloperDashboard from './pages/Dashboard/DeveloperDashboard';
 import NotFound from './pages/notfound/notfound';
 import ProtectedRoute from './components/ProtectedRoute';
+import DeveloperList from './pages/Dashboard/DeveloperList';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route element={<ProtectedRoute roles={['admin']} />}>
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/developer-list" element={<DeveloperList />} />
           </Route>
           <Route element={<ProtectedRoute roles={['developer']} />}>
             <Route path="/developer" element={<DeveloperDashboard />} />
