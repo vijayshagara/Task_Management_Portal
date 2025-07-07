@@ -28,18 +28,19 @@ const AdminDashboard = () => {
       }
     };
     fetchData();
-  }, [tasks]);
+  }, []);
 
   const handleCreateTask = async (task: any) => {
     try {
-      const newTask = await createTask(task);
-      setTasks([...tasks, newTask]);
+      await createTask(task);
+      const tsk = await getTasks();
+      setTasks(tsk);
       setShowTaskForm(false);
     } catch (error) {
       console.error('Error creating task:', error);
     }
   };
-
+  
   return (
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
@@ -48,19 +49,16 @@ const AdminDashboard = () => {
         </Typography>
 
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
-          {/* <Button variant="contained" onClick={() => setShowUserForm(true)}>
-            Add Developer
-          </Button> */}
-           <Button variant="contained" onClick={() => {
+          <Button variant="contained" onClick={() => {
             navigate('/developer-list');
-           }}>
+          }}>
             All Developer
           </Button>
           <Button variant="contained" onClick={() => setShowTaskForm(true)}>
             Add Task
           </Button>
         </Box>
-        
+
         {showTaskForm && (
           <TaskForm
             developers={developers}

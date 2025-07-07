@@ -47,7 +47,7 @@ export default function UserForm({ onSubmit, onCancel }: UserFormProps) {
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel}>Cancel</Button>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleSubmit} disabled={!name || !email || !password}>Submit</Button>
       </DialogActions>
     </Dialog>
   );

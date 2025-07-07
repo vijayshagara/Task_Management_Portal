@@ -26,6 +26,7 @@ export default function TaskForm({ developers, onSubmit, onCancel }: TaskFormPro
           fullWidth
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          required
         />
         <TextField
           margin="dense"
@@ -35,6 +36,7 @@ export default function TaskForm({ developers, onSubmit, onCancel }: TaskFormPro
           fullWidth
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          required
         />
         <InputLabel id="developer-label">Developer</InputLabel>
         <Select
@@ -52,7 +54,7 @@ export default function TaskForm({ developers, onSubmit, onCancel }: TaskFormPro
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel}>Cancel</Button>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleSubmit} disabled={!title || !description}>Submit</Button>
       </DialogActions>
     </Dialog>
   );
