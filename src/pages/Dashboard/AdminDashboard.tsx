@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Box, Typography, Button, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { getDevelopers, createUser } from '../../api/user.api';
+import { getDevelopers } from '../../api/user.api';
 import { getTasks, createTask } from '../../api/task.api';
-import UserForm from '../../components/User/UserForm';
 import TaskForm from '../../components/Task/TaskForm';
 import { User } from '../../interfaces/user.interface';
 import { Task } from '../../interfaces/task.interface';
@@ -11,7 +10,6 @@ import { useNavigate } from 'react-router-dom';
 const AdminDashboard = () => {
   const [developers, setDevelopers] = useState<User[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [showUserForm, setShowUserForm] = useState(false);
   const [showTaskForm, setShowTaskForm] = useState(false);
   const navigate = useNavigate();
 
@@ -30,17 +28,7 @@ const AdminDashboard = () => {
       }
     };
     fetchData();
-  }, []);
-
-  const handleCreateUser = async (user: Omit<User, 'id'>) => {
-    try {
-      const newUser = await createUser(user);
-      setDevelopers([...developers, newUser]);
-      setShowUserForm(false);
-    } catch (error) {
-      console.error('Error creating user:', error);
-    }
-  };
+  }, [tasks]);
 
   const handleCreateTask = async (task: any) => {
     try {
@@ -60,9 +48,9 @@ const AdminDashboard = () => {
         </Typography>
 
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
-          <Button variant="contained" onClick={() => setShowUserForm(true)}>
+          {/* <Button variant="contained" onClick={() => setShowUserForm(true)}>
             Add Developer
-          </Button>
+          </Button> */}
            <Button variant="contained" onClick={() => {
             navigate('/developer-list');
            }}>
@@ -72,14 +60,7 @@ const AdminDashboard = () => {
             Add Task
           </Button>
         </Box>
-
-        {showUserForm && (
-          <UserForm
-            onSubmit={handleCreateUser}
-            onCancel={() => setShowUserForm(false)}
-          />
-        )}
-
+        
         {showTaskForm && (
           <TaskForm
             developers={developers}

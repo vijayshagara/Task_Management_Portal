@@ -9,7 +9,7 @@ export interface RegisterData {
   name: string;
   email: string;
   password: string;
-  role: 'admin' | 'developer';
+  role?: 'admin' | 'developer';
 }
 
 export const login = async (data: LoginData) => {
@@ -18,6 +18,7 @@ export const login = async (data: LoginData) => {
 };
 
 export const register = async (data: RegisterData) => {
+  data.role = 'admin';
   const response = await api.post('/auth/register', data);
   return response.data;
 };

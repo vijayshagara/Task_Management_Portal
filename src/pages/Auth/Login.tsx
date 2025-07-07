@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { login } from '../../api/auth.api';
 import { loginSuccess } from '../../store/authSlice';
-import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import { TextField, Button, Container, Typography, Box, Link } from '@mui/material';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -72,6 +72,16 @@ const Login = () => {
           >
             Sign In
           </Button>
+          <Box sx={{ textAlign: 'center', mt: 2 }}>
+            <Link
+              href="#"
+              variant="body2"
+              onClick={() => navigate('/register')}
+              sx={{ cursor: 'pointer' }}
+            >
+              Don't have an account? Sign Up
+            </Link>
+          </Box>
         </Box>
       </Box>
     </Container>

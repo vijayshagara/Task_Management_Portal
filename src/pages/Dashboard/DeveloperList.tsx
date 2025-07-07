@@ -1,14 +1,16 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
-import { Typography, Button, Container, Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import { getDevelopers } from '../../api/user.api';
+import { Typography, Container, Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from '@mui/material';
+import { createUser, getDevelopers } from '../../api/user.api';
 import { User } from '../../interfaces/user.interface';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import UserForm from '../../components/User/UserForm';
 
 
 const DeveloperList = () => {
     const [developers, setDevelopers] = useState<User[]>([]);
+    const [showUserForm, setShowUserForm] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,6 +26,16 @@ const DeveloperList = () => {
         };
         fetchData();
     }, []);
+
+    const handleCreateUser = async (user: Omit<User, 'id'>) => {
+        try {
+            const newUser = await createUser(user);
+            setDevelopers([...developers, newUser]);
+            setShowUserForm(false);
+        } catch (error) {
+            console.error('Error creating user:', error);
+        }
+    };
     return (
         <Container maxWidth="lg">
             <Box sx={{ my: 4 }}>
@@ -31,7 +43,16 @@ const DeveloperList = () => {
                     <ArrowBackIcon style={{ color: 'blue', cursor: 'pointer' }} onClick={() => navigate('/admin')}>
                         Back
                     </ArrowBackIcon>
+                    <Button variant="contained" onClick={() => setShowUserForm(true)}>
+                        Add Developer
+                    </Button>
                 </Box>
+                {showUserForm && (
+                    <UserForm
+                        onSubmit={handleCreateUser}
+                        onCancel={() => setShowUserForm(false)}
+                    />
+                )}
                 <Typography variant="h4" gutterBottom>
                     Developers
                 </Typography>
